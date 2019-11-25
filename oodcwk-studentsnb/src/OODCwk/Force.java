@@ -11,36 +11,36 @@ package OODCwk;
  */
 public class Force {
     
-    private String fleetRefNo;
-    private String fleetName; 
+    private String forceRefNo;
+    private String forceName; 
     private int activationFee;
     private int fleetStrength;
     private ForceState ForceState;
     
-    public Force(String fleetRefNo, String fleetName, int activationFee, int fleetStrength, ForceState ForceState ){
+    public Force(String forceRefNo, String forceName, int activationFee, int fleetStrength, ForceState ForceState ){
         
-        this.fleetRefNo = fleetRefNo;
-        this.fleetName = fleetName;
+        this.forceRefNo = forceRefNo;
+        this.forceName = forceName;
         this.activationFee = activationFee;
         this.fleetStrength = fleetStrength;
         this.ForceState = ForceState;
  
     }
     
-    public void setFleetRefNo(String fleetRefNo) {
-        this.fleetRefNo = fleetRefNo;
+    public void setForceRefNo(String forceRefNo) {
+        this.forceRefNo = forceRefNo;
     }
    
-    public String getFleetRefNo(){
-        return fleetRefNo;
+    public String getForceRefNo(){
+        return forceRefNo;
     }
     
-    public void setFleetName(String fleetName) {
-        this.fleetName = fleetName;
+    public void setForceName(String forceName) {
+        this.forceName = forceName;
     }
     
-    public String getFleetName(){
-        return fleetName;
+    public String getForceName(){
+        return forceName;
     }
     
     public void setActivationfee(int activationfee) {
@@ -72,7 +72,7 @@ public class Force {
     }
     
     public String toString(){
-        return "Reference: " + fleetRefNo + "\n" + "Fleet Name: " + fleetName + "\n" +
+        return "Reference: " + forceRefNo + "\n" + "Fleet Name: " + forceName + "\n" +
               "Activation Fee: " + activationFee +  "\n" + "Strength: " + fleetStrength;
     }
     

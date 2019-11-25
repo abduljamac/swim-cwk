@@ -13,10 +13,10 @@ import java.io.*;
 public class SpaceWars implements SWIM,Serializable 
 {
     // fields
-    ArrayList<Battle> allBattles = new ArrayList<>();
-    ArrayList<Force> allForces = new ArrayList<>();
-    String admiral;
-    int bitCoin = 1000;
+    private ArrayList<Battle> allBattles;
+    private ArrayList<Force> allForces;
+    private String admiral;
+    private int bitCoin = 1000;
     
   
 
@@ -27,7 +27,10 @@ public class SpaceWars implements SWIM,Serializable
     public SpaceWars(String admiral)
     {  
         this.admiral = admiral;
+        allBattles = new ArrayList<>();
+        allForces = new ArrayList<>();
         setupForces();
+        setupBattles();
     }
     
     /**Returns a String representation of the state of the game,
@@ -97,7 +100,7 @@ public class SpaceWars implements SWIM,Serializable
     {
         String details = "";
         for( Force force: allForces ){
-           if( force.getFleetRefNo().equals(ref) ){
+           if( force.getForceRefNo().equals(ref) ){
             details = force.toString();
            } 
         }
@@ -116,7 +119,7 @@ public class SpaceWars implements SWIM,Serializable
     public int activateForce(String ref)
     {  
         for( Force force: allForces){
-            if( force.getFleetRefNo().equals(ref) ){
+            if( force.getForceRefNo().equals(ref) ){
                if( force.getActivationFee() > getWarchest() ){
                     return 2;
                } else if (!force.getForceState().equals(ForceState.DOCKED)){
@@ -143,7 +146,7 @@ public class SpaceWars implements SWIM,Serializable
     {
         boolean activeStarFleet =  false;
         for( Force force: allForces){
-            if(force.getFleetRefNo().equals(ref)){
+            if(force.getForceRefNo().equals(ref)){
                 if(force.getForceState().equals(ForceState.ACTIVE)){
                     activeStarFleet = true;
                 }
@@ -161,7 +164,7 @@ public class SpaceWars implements SWIM,Serializable
     public void recallForce(String ref)
     {
         for( Force force: allForces){
-            if(force.getFleetRefNo().equals(ref)){
+            if(force.getForceRefNo().equals(ref)){
                force.setForceState(ForceState.DOCKED);
                System.out.println("before" + bitCoin);
                bitCoin = bitCoin + force.getRefund();
