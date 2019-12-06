@@ -10,70 +10,73 @@ package OODCwk;
  * @author abdul
  */
 public class Force {
-    
+
     private String forceRefNo;
-    private String forceName; 
+    private String forceName;
     private int activationFee;
-    private int fleetStrength;
-    private ForceState ForceState;
-    
-    public Force(String forceRefNo, String forceName, int activationFee, int fleetStrength, ForceState ForceState ){
-        
+    private int forceStrength;
+    private ForceState forceState;
+
+    public Force(String forceRefNo, String forceName, int activationFee, int forceStrength, ForceState forceState ){
+
         this.forceRefNo = forceRefNo;
         this.forceName = forceName;
         this.activationFee = activationFee;
-        this.fleetStrength = fleetStrength;
-        this.ForceState = ForceState;
- 
+        this.forceStrength = forceStrength;
+        this.forceState = forceState;
+
     }
-    
+
     public void setForceRefNo(String forceRefNo) {
         this.forceRefNo = forceRefNo;
     }
-   
+
     public String getForceRefNo(){
         return forceRefNo;
     }
-    
+
     public void setForceName(String forceName) {
         this.forceName = forceName;
     }
-    
+
     public String getForceName(){
         return forceName;
     }
-    
+
     public void setActivationfee(int activationfee) {
         this.activationFee = activationfee;
     }
-    
+
     public int getActivationFee(){
         return activationFee;
     }
-    
+
     public int getRefund(){
         return activationFee / 2;
     }
-    
-    public void setFleetStrength(int fleetStrength) {
-        this.fleetStrength = fleetStrength;
+
+    public void setForceStrength(int forceStrength) {
+        this.forceStrength = forceStrength;
     }
-    
-    public int getFleetStrength(){
-        return fleetStrength;
+
+    public int getForceStrength(){
+        return forceStrength;
     }
-    
+
     public void setForceState(ForceState ForceState) {
-        this.ForceState = ForceState;
+        this.forceState = ForceState;
     }
-    
+
     public ForceState getForceState() {
-        return ForceState;
+        return forceState;
     }
-    
+
     public String toString(){
-        return "Reference: " + forceRefNo + "\n" + "Fleet Name: " + forceName + "\n" +
-              "Activation Fee: " + activationFee +  "\n" + "Strength: " + fleetStrength;
+        return "Reference: " + getForceRefNo() + 
+                "\n" + "Fleet Name: " + getForceName() +
+                "\n" +"Activation Fee: " + getActivationFee() +  
+                "\n" + "Strength: " + getForceStrength()+  
+                "\n" + "Force State: " + getForceState();
     }
     
 }

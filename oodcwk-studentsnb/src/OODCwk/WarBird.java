@@ -9,17 +9,25 @@ package OODCwk;
  *
  * @author abdul
  */
-public class WarBird extends Force{
-    
+public class WarBird extends Force {
+
     boolean cloakingDevice = false;
     
-    public WarBird(String fleetRefNo, String fleetName, int activationFee, int fleetStrength, boolean cloakingDevice, ForceState ForceState){
-        
-        super(fleetRefNo, fleetName, activationFee, fleetStrength, ForceState);
+    public WarBird(String forceRefNo, String forceName, int activationFee, int forceStrength, ForceState forceState,  boolean cloakingDevice) {
+        super(forceRefNo, forceName, activationFee, forceStrength, forceState);
         this.cloakingDevice = cloakingDevice;
     }
-    
+
+    public boolean getCloakingDevice() {
+        return cloakingDevice;
+    }
+
+    public void setCloakingDevice(boolean cloakingDevice) {
+        this.cloakingDevice = cloakingDevice;
+    }
+
+    @Override
     public String toString() {
-       return super.toString() + "\n" + "Cloaking Device: " + cloakingDevice;  
+        return super.toString() + "\n" + "Cloaking Device: " + getCloakingDevice();
     }
 }

@@ -16,9 +16,7 @@ public class SpaceWars implements SWIM,Serializable
     private ArrayList<Battle> allBattles;
     private ArrayList<Force> allForces;
     private String admiral;
-    private int bitCoin = 1000;
-    
-  
+    private static int bitCoin = 1000;
 
 //**************** SWIM **************************  
     /** Constructor requires the name of the admiral
@@ -44,9 +42,21 @@ public class SpaceWars implements SWIM,Serializable
      **/
     public String toString()
     {
-        return "Nothing here";
+        StringBuilder spaceWarString = new StringBuilder();
+        spaceWarString.append("Admiral Name: " + getAdmiral() + "\n");
+        spaceWarString.append("War Chest Balance: " + getWarchest() + "\n");
+        spaceWarString.append("Admiral is Defeated: " + isDefeated() + "\n");
+        spaceWarString.append(getASFleet());
+        return spaceWarString.toString();
     }
-        
+    
+    public String getAdmiral() {
+        return admiral;
+    }
+
+    public void setAdmiral(String admiral) {
+        this.admiral = admiral;
+    }
       
     /** returns true if war chest <=0 and the active Star Fleet(ASF) has no 
      * forces which can be recalled. 
@@ -55,8 +65,7 @@ public class SpaceWars implements SWIM,Serializable
      */
     public boolean isDefeated()
     {
-        if (bitCoin <= 0){
-        
+        if (getWarchest() <= 0){
         }
             
         return false;
@@ -73,10 +82,15 @@ public class SpaceWars implements SWIM,Serializable
     
     /**Returns true if force is in the United Forces Fleet(UFF), else false
      * @param ref reference of the force
-     * @return a String representation of all forces in the United Forces Fleet(UFF)
+     * @return a String representation of all forces in the United Forces Fleet(UFF)??/
      **/
     public boolean isInUFFleet(String ref) 
     {
+        for( Force force: allForces){
+            if(force.getForceRefNo().equals(ref)){
+                return true;
+            }
+        }
         return false;
     }
     
@@ -87,8 +101,7 @@ public class SpaceWars implements SWIM,Serializable
     {   
         StringBuilder UFFleet = new StringBuilder();
         for( Force force: allForces ){
-            UFFleet.append(force + "\n" + "\n");
-            
+            UFFleet.append(force).append("\n****\n");
         }
         return UFFleet.toString();
     }
@@ -102,7 +115,9 @@ public class SpaceWars implements SWIM,Serializable
         for( Force force: allForces ){
            if( force.getForceRefNo().equals(ref) ){
             details = force.toString();
-           } 
+           } else {
+               details = "No such force!";
+           }
         }
         return details;
     }     
@@ -117,10 +132,10 @@ public class SpaceWars implements SWIM,Serializable
       * 2 if not enough money, 3 if no such force
      **/       
     public int activateForce(String ref)
-    {  
+    {
         for( Force force: allForces){
             if( force.getForceRefNo().equals(ref) ){
-               if( force.getActivationFee() > getWarchest() ){
+               if( force.getActivationFee() >= getWarchest() ){
                     return 2;
                } else if (!force.getForceState().equals(ForceState.DOCKED)){
                    return 1;
@@ -144,15 +159,14 @@ public class SpaceWars implements SWIM,Serializable
      **/
     public boolean isInASFleet(String ref)
     {
-        boolean activeStarFleet =  false;
         for( Force force: allForces){
             if(force.getForceRefNo().equals(ref)){
                 if(force.getForceState().equals(ForceState.ACTIVE)){
-                    activeStarFleet = true;
+                    return true;
                 }
             }
         }
-        return activeStarFleet;
+        return false;
     }
     
     
@@ -183,7 +197,15 @@ public class SpaceWars implements SWIM,Serializable
      **/
     public String getASFleet()
     {
-        return "Nothing";
+        StringBuilder ASFleet = new StringBuilder();
+        for (Force force : allForces) {
+            if(force.getForceState().equals(ForceState.ACTIVE)){
+                ASFleet.append(force).append("\n****\n");
+            }
+                
+        }
+        
+        return ASFleet.toString();
     }
        
     
@@ -205,8 +227,16 @@ public class SpaceWars implements SWIM,Serializable
      * the battle number
      **/
     public String getBattle(int num)
-    {
-        return "No such battle";
+    {   
+        String stringRep = "";
+        for (Battle battle : allBattles){
+            if(battle.getBattleNo() == num){
+                stringRep =  battle.toString();
+            } else{ 
+                stringRep =  "No such battle";
+            }
+        }
+        return  stringRep;
     }
     
     /** Provides a String representation of all battles 
@@ -214,7 +244,12 @@ public class SpaceWars implements SWIM,Serializable
      **/
     public String getAllBattles()
     {
-        return "Nothing";
+        StringBuilder Battles = new StringBuilder();
+        for(Battle battle: allBattles ){
+            Battles.append(battle).append("\n****\n");
+
+        }
+        return Battles.toString();
     }
      
      
@@ -234,39 +269,59 @@ public class SpaceWars implements SWIM,Serializable
       */ 
     public int doBattle(int battleNo)
     {
-        return 3;
+       for(Battle battle: allBattles){
+           if(battle.getBattleNo() == (battleNo)){
+               for(Force force : allForces){
+                   if(force.getForceState().equals(ForceState.ACTIVE)){
+                       if(battle.getEnemyStrength() < force.getForceStrength()){
+                           bitCoin = bitCoin + battle.getGains();
+                           return 0;
+                       } else if(battle.getEnemyStrength() > force.getForceStrength()){
+                           if(getWarchest() <= 0){
+                                return 3;
+                           } else {
+                                bitCoin = bitCoin + battle.getLosses();
+                                return 2;
+                           }
+                          
+                        } 
+                   } else if(!force.getForceState().equals(ForceState.ACTIVE)){
+                       bitCoin = bitCoin + battle.getLosses();
+                       return 1;
+                   } 
+               }
+           }
+       }
+       
+       return -1;
     }
      
     //*******************************************************************************
     private void setupForces()
     {
-        Wings IW1 = new Wings("IW1", "Twisters",  200, 10, 200, ForceState.DOCKED);
-        Wings IW4 = new Wings ("IW4", "Wingers",  200, 20, 400, ForceState.DOCKED);
-        Wings IW10 = new Wings ("IW10", "Flyers", 200,  5, 150, ForceState.DOCKED);
+        Force IW1 = new Wing("IW1", "Twisters",  200, 200, ForceState.DOCKED,10);
+        Force SS2 = new StarShip("SS2", "Enterprise", 300, 200, ForceState.DOCKED,10 ,20);
+        Force WB3 = new WarBird("WB3", "Droop",  300, 100,  ForceState.DOCKED, false);
+        Force IW4 = new Wing("IW4", "Wingers",  200, 400, ForceState.DOCKED, 20);
+        Force WB5 = new WarBird("WB5", "Hang",   400, 300,   ForceState.DOCKED, true);
+        Force SS6 = new StarShip("SS6", "Voyager",    450, 200, ForceState.DOCKED, 15, 10);
+        Force SS7 = new StarShip("SS7", "Explorer",   120,  65,  ForceState.DOCKED,  4, 5);
+        Force WB9 = new WarBird("WB9", "Hover",  300, 400,  ForceState.DOCKED, false);
+        Force IW10 = new Wing("IW10", "Flyers", 200, 150, ForceState.DOCKED, 5);
         
-        StarShip SS2 = new StarShip("SS2", "Enterprise", 300, 10, 20, 200, ForceState.DOCKED);
-        StarShip SS6 = new StarShip("SS6", "Voyager",    450, 15, 10, 200, ForceState.DOCKED);
-        StarShip SS7 = new StarShip("SS7", "Explorer",   120,  4, 5,  65,  ForceState.DOCKED);
-        
-        WarBird WB3 = new WarBird("WB3", "Droop",  300, 100, false, ForceState.DOCKED);
-        WarBird WB5 = new WarBird("WB5", "Hang",   400, 300, true,  ForceState.DOCKED);
-        WarBird WB9 = new WarBird("WB9", "Hover",  300, 400, false, ForceState.DOCKED);
-        
-        allForces.add(SS2);
-        allForces.add(SS6);
-        allForces.add(SS7);
-        
-  
-        allForces.add(WB3);
-        allForces.add(WB5);
-        allForces.add(WB9);
         
         allForces.add(IW1);
+        allForces.add(SS2);
+        allForces.add(WB3);
         allForces.add(IW4);
-        allForces.add(IW10); 
+        allForces.add(WB5);
+        allForces.add(SS6);
+        allForces.add(SS7);
+        allForces.add(WB9);
+        allForces.add(IW10);
     }
     
-    private void setupBattles()  
+    private void setupBattles()
     {
         Battle b1 = new Battle(1, BattleType.FIGHT , "Borg", 200, 300, 100);
         Battle b2 = new Battle(2, BattleType.SKIRMISH , "Kardassians", 700, 200, 120);
@@ -276,8 +331,8 @@ public class SpaceWars implements SWIM,Serializable
         Battle b6 = new Battle(6, BattleType.SKIRMISH , "Groaners", 150, 100, 100);
         Battle b7 = new Battle(7, BattleType.FIGHT , "Borg", 150, 500, 300);
         Battle b8 = new Battle(8, BattleType.AMBUSH , "Wallers", 300, 300, 300);
-        
-         
+
+
         allBattles.add(b1);
         allBattles.add(b2);
         allBattles.add(b3);

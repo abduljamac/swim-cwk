@@ -23,7 +23,6 @@ public class GameUI
         {
             System.out.println("Enter admiral's name");
             String s = myIn.nextLine();
-            System.out.println("Welcome Admiral " + s);
             gp = new SpaceWars(s); // create
             // To test readBattles(), replace above by 
             // gp = new SpaceWars(s, "Olenka.txt"); 
@@ -39,12 +38,13 @@ public class GameUI
                 }
                 else if (choice == 2) //List active Star Fleet
                 {
-               
+                    System.out.println(gp.getASFleet());
                 }
                 else if (choice == 3) //get Force
                 {
+                    // provide code
                     System.out.println("Enter Reference Number:");
-                    String ref = myIn.nextLine();
+                    String ref = myIn.nextLine().toUpperCase();
                     System.out.println(gp.getForce(ref));
                 } 
                 else if (choice == 4) //activate Force
@@ -60,6 +60,10 @@ public class GameUI
                 else if (choice == 5) //do battle
                 {
                     // provide code
+                    System.out.println("Enter Battle Number:");
+                    String ref = myIn.nextLine().toUpperCase();
+                    int battleNo =  Integer.parseInt(ref);
+                    System.out.println(gp.doBattle(battleNo));
                 }
                 
                 else if (choice == 6) //recall force
@@ -101,7 +105,7 @@ public class GameUI
         System.out.println("1. List forces in United Forces Fleet");
         System.out.println("2. List forces in admirals active Star fleet"); 
         System.out.println("3. View a force");
-        System.out.println("4. Activate a force into admirals active Star  fleet");
+        System.out.println("4. Activate a force into dmirals active Star  fleet");
         System.out.println("5. Engage in a battle");
         System.out.println("6. Recall a force");
         System.out.println("7. View the state of the game");

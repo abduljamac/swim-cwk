@@ -11,20 +11,34 @@ package OODCwk;
  */
 public class StarShip extends Force {
     
-    int laserCannons;
-    int photonTorpedoes;
-    
-    public StarShip(String fleetRefNo, String fleetName, int activationFee, int laserCannons, int photonTorpedoes, int fleetStrength, ForceState ForceState){
-        
-        super(fleetRefNo, fleetName, activationFee, fleetStrength, ForceState);
+    private int laserCannons;
+    private int photonTorpedoes;
+
+    public StarShip(String forceRefNo, String forceName, int activationFee, int forceStrength, ForceState forceState, int laserCannons, int photonTorpedoes) {
+        super(forceRefNo, forceName, activationFee, forceStrength, forceState);
         this.laserCannons = laserCannons;
         this.photonTorpedoes = photonTorpedoes;
     }
-    
-    public String toString() {
-       return super.toString() + "\n" + "Laser Cannons: " + laserCannons + "\n" 
-               + "Photon Torpedoes: " + photonTorpedoes;   
+
+    public int getLaserCannons() {
+        return laserCannons;
     }
 
-    
+    public void setLaserCannons(int laserCannons) {
+        this.laserCannons = laserCannons;
+    }
+
+    public int getPhotonTorpedoes() {
+        return photonTorpedoes;
+    }
+
+    public void setPhotonTorpedoes(int photonTorpedoes) {
+        this.photonTorpedoes = photonTorpedoes;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\n" + "Laser Cannons: " + getLaserCannons() + "\n"
+                + "Photon Torpedoes: " + getPhotonTorpedoes();
+    }  
 }
