@@ -12,11 +12,13 @@ package OODCwk;
 public class Wing extends Force {
     
     private int strikers; 
-    
-    public Wing(String forceRefNo, String forceName, int activationFee, int forceStrength, ForceState forceState, int strikers) {
-        super(forceRefNo, forceName, activationFee, forceStrength, forceState);
+
+    public Wing(String forceRefNo, String forceName, int activationFee, int forceStrength, ForceState forceState, boolean canSkirmish, boolean canAmbush, boolean canFight, int strikers) {
+        super(forceRefNo, forceName, activationFee, forceStrength, forceState,  canSkirmish, canAmbush, canFight);
         this.strikers = strikers;
     }
+    
+
 
     public int getStrikers() {
         return strikers;

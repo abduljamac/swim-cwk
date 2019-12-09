@@ -16,17 +16,21 @@ public class Force {
     private int activationFee;
     private int forceStrength;
     private ForceState forceState;
+    private boolean canSkirmish;
+    private boolean canAmbush;
+    private boolean canFight;
 
-    public Force(String forceRefNo, String forceName, int activationFee, int forceStrength, ForceState forceState ){
-
+    public Force(String forceRefNo, String forceName, int activationFee, int forceStrength, ForceState forceState,  boolean canSkirmish, boolean canAmbush, boolean canFight) {
         this.forceRefNo = forceRefNo;
         this.forceName = forceName;
         this.activationFee = activationFee;
         this.forceStrength = forceStrength;
         this.forceState = forceState;
-
+        this.canSkirmish = canSkirmish;
+        this.canAmbush = canAmbush;
+        this.canFight = canFight;
     }
-
+    
     public void setForceRefNo(String forceRefNo) {
         this.forceRefNo = forceRefNo;
     }
@@ -70,6 +74,40 @@ public class Force {
     public ForceState getForceState() {
         return forceState;
     }
+    
+    public boolean isCanSkirmish() {
+        return canSkirmish;
+    }
+
+    public void setCanSkirmish(boolean canSkirmish) {
+        this.canSkirmish = canSkirmish;
+    }
+
+    public boolean isCanAmbush() {
+        return canAmbush;
+    }
+
+    public void setCanAmbush(boolean canAmbush) {
+        this.canAmbush = canAmbush;
+    }
+
+    public boolean isCanFight() {
+        return canFight;
+    }
+
+    public void setCanFight(boolean canFight) {
+        this.canFight = canFight;
+    }
+    
+    public boolean isCorrectBattleType(Battle battle, Force force) {
+        if ((battle.getType().equals(BattleType.FIGHT) && force.canFight) ||
+            (battle.getType().equals(BattleType.SKIRMISH) && force.canSkirmish) ||
+            (battle.getType().equals(BattleType.AMBUSH) && force.canAmbush)) {
+            return true;
+        }
+        return false;
+    }
+
 
     public String toString(){
         return "Reference: " + getForceRefNo() + 

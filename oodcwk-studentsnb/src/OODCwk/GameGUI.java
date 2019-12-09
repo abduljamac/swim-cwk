@@ -3,6 +3,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
+import javax.swing.JScrollPane; 
+
 
 /**
  * Provide a GUI interface for the game
@@ -15,14 +17,14 @@ public class GameGUI
     private SWIM gp = new SpaceWars("Horatio");
     private JFrame myFrame = new JFrame("Game GUI");
     private Container contentPane = myFrame.getContentPane();
-    private JTextArea listing = new JTextArea();
+    private JTextArea listing = new JTextArea(20,20);
     private JLabel codeLabel = new JLabel ();
     private JButton fightBtn = new JButton("Fight");
     private JButton viewBtn = new JButton("View State");
     private JButton clearBtn = new JButton("Clear");
     private JButton quitBtn = new JButton("Quit");
     private JPanel eastPanel = new JPanel();
-   
+    
     
     public GameGUI()
     {
@@ -56,6 +58,10 @@ public class GameGUI
         // building is done - arrange the components and show        
         myFrame.pack();
         myFrame.setVisible(true);
+        myFrame.setSize(500, 300);
+        
+       
+        
     }
     
     /**
@@ -65,7 +71,7 @@ public class GameGUI
     {
         JMenuBar menubar = new JMenuBar();
         frame.setJMenuBar(menubar);
-        
+                
         // create the File menu
         JMenu fileMenu = new JMenu("Forces");
         menubar.add(fileMenu);
@@ -78,6 +84,10 @@ public class GameGUI
         listFleetItem.addActionListener(new ListFleetHandler());
         fileMenu.add(listFleetItem);
         
+        JMenuItem listBattlesItem = new JMenuItem("View Battles");
+        listBattlesItem.addActionListener(new ListBattlesHandler());
+        fileMenu.add(listBattlesItem);
+        
         JMenuItem activation = new JMenuItem("Activate Force");
         activation.addActionListener(new ActivateHandler());
         fileMenu.add(activation);
@@ -85,6 +95,8 @@ public class GameGUI
         JMenuItem recall = new JMenuItem("Recall Force");
         recall.addActionListener(new RecallHandler());
         fileMenu.add(recall);
+
+        
     }
     
     private String activation(int code)
@@ -132,6 +144,16 @@ public class GameGUI
         }
     }
     
+    private class ListBattlesHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e) 
+        { 
+            listing.setVisible(true);
+            String xx = gp.getAllBattles();
+            listing.setText(xx);
+        }
+    }
+    
     private class ClearHandler implements ActionListener
     {
         public void actionPerformed(ActionEvent e) 
@@ -146,6 +168,10 @@ public class GameGUI
         public void actionPerformed(ActionEvent e) 
         { 
             // add code here   
+            int result = -1;
+            String inputValue = JOptionPane.showInputDialog("Force reference ?: ").toUpperCase();
+            result = gp.activateForce(inputValue);
+            JOptionPane.showMessageDialog(myFrame,activation(result));    
         }
     }
     
@@ -154,7 +180,7 @@ public class GameGUI
         public void actionPerformed(ActionEvent e) 
         { 
             String result = "";
-            String inputValue = JOptionPane.showInputDialog("Force code ?: ");
+            String inputValue = JOptionPane.showInputDialog("Force code ?: ").toUpperCase();
             
             if(gp.isInASFleet(inputValue)) 
             {
@@ -169,12 +195,13 @@ public class GameGUI
         }
     }
     
+    
     private class ViewForceHandler implements ActionListener
     {
         public void actionPerformed(ActionEvent e) 
         { 
             String result = "";
-            String inputValue = JOptionPane.showInputDialog("Force code ?: ");
+            String inputValue = JOptionPane.showInputDialog("Force code ?: ").toUpperCase();
             result = gp.getForce(inputValue);
             JOptionPane.showMessageDialog(myFrame,result);    
         }
@@ -185,10 +212,10 @@ public class GameGUI
         public void actionPerformed(ActionEvent e) 
         { 
             int result = -1;
-            String inputValue = JOptionPane.showInputDialog("Battle number ?: ");
+            String inputValue = JOptionPane.showInputDialog("Battle number ?: ").toUpperCase();
             int num = Integer.parseInt(inputValue);
             result = gp.doBattle(num);
-            JOptionPane.showMessageDialog(myFrame,fighting(result));    
+            JOptionPane.showMessageDialog(myFrame,fighting(result) + "\nWarchest = " + gp.getWarchest());    
         }
     }
     

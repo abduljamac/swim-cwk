@@ -13,8 +13,8 @@ public class WarBird extends Force {
 
     boolean cloakingDevice = false;
     
-    public WarBird(String forceRefNo, String forceName, int activationFee, int forceStrength, ForceState forceState,  boolean cloakingDevice) {
-        super(forceRefNo, forceName, activationFee, forceStrength, forceState);
+    public WarBird(String forceRefNo, String forceName, int activationFee, int forceStrength, ForceState forceState, boolean canSkirmish, boolean canAmbush, boolean canFight, boolean cloakingDevice) {
+        super(forceRefNo, forceName, activationFee, forceStrength, forceState,  canSkirmish, canAmbush, canFight);
         this.cloakingDevice = cloakingDevice;
     }
 

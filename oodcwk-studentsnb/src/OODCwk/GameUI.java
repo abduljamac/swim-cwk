@@ -25,7 +25,7 @@ public class GameUI
             String s = myIn.nextLine();
             gp = new SpaceWars(s); // create
             // To test readBattles(), replace above by 
-            // gp = new SpaceWars(s, "Olenka.txt"); 
+            gp = new SpaceWars(s, "Olenka.txt"); 
             System.out.println(gp.getAllBattles());
             choice = 100;
             while (choice != 0 )
@@ -48,9 +48,9 @@ public class GameUI
                     System.out.println(gp.getForce(ref));
                 } 
                 else if (choice == 4) //activate Force
-                {   
+                {
                     System.out.println("Enter Force reference");
-                    String nme = (myIn.nextLine()).trim();
+                    String nme = (myIn.nextLine()).trim().toUpperCase();
                     if(!gp.isDefeated()) //optional
                     {
                         result = gp.activateForce(nme);
@@ -63,13 +63,14 @@ public class GameUI
                     System.out.println("Enter Battle Number:");
                     String ref = myIn.nextLine().toUpperCase();
                     int battleNo =  Integer.parseInt(ref);
-                    System.out.println(gp.doBattle(battleNo));
+//                    System.out.println(battling(gp.doBattle(battleNo)) + "\nWar chest = " + gp.getWarchest());
+                    System.out.println(battling(gp.doBattle(battleNo)) + "\nWarchest =" + gp.getWarchest());
                 }
                 
                 else if (choice == 6) //recall force
                 {
-                    System.out.println("Enter Force reference");
-                    String ref = (myIn.nextLine()).trim();
+                    System.out.println("Enter Force Reference:");
+                    String ref = (myIn.nextLine()).trim().toUpperCase();
                     if(gp.getForce(ref) != null && gp.isInASFleet(ref))
                     {
                         gp.recallForce(ref);
@@ -81,17 +82,17 @@ public class GameUI
                 {
                     System.out.println(gp.toString());
                 }
-//                else if (choice == 8) // Task 4.4 only
-//                {
-//                    System.out.println("Write to file");
-//                    gp.saveGame("myfile.txt");
-//                }
-//                else if (choice == 9) // Task 4.4 only
-//                {
-//                    System.out.println("Restore from file");
-//                    gp = gp.restoreGame("myfile.txt");
-//                    System.out.println(gp.toString());               
-//                }
+                else if (choice == 8) // Task 4.4 only
+                {
+                    System.out.println("Write to file");
+                    gp.saveGame("myfile.txt");
+                }
+                else if (choice == 9) // Task 4.4 only
+                {
+                    System.out.println("Restore from file");
+                    gp = gp.restoreGame("myfile.txt");
+                    System.out.println(gp.toString());               
+                }
             }     
         }
         catch (IOException e) {System.out.println (e);}   
@@ -105,13 +106,13 @@ public class GameUI
         System.out.println("1. List forces in United Forces Fleet");
         System.out.println("2. List forces in admirals active Star fleet"); 
         System.out.println("3. View a force");
-        System.out.println("4. Activate a force into dmirals active Star  fleet");
+        System.out.println("4. Activate a force into admirals active Star fleet");
         System.out.println("5. Engage in a battle");
         System.out.println("6. Recall a force");
         System.out.println("7. View the state of the game");
         //Task 4.4 only
-//        System.out.println("8. Save this game");
-//        System.out.println("9. Restore a game");
+        System.out.println("8. Save this game");
+        System.out.println("9. Restore a game");
        
         
         while (choice < 0 || choice  > 9)

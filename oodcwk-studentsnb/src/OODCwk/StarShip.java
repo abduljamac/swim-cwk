@@ -14,8 +14,8 @@ public class StarShip extends Force {
     private int laserCannons;
     private int photonTorpedoes;
 
-    public StarShip(String forceRefNo, String forceName, int activationFee, int forceStrength, ForceState forceState, int laserCannons, int photonTorpedoes) {
-        super(forceRefNo, forceName, activationFee, forceStrength, forceState);
+    public StarShip(String forceRefNo, String forceName, int activationFee, int forceStrength, ForceState forceState, boolean canSkirmish, boolean canAmbush, boolean canFight, int laserCannons, int photonTorpedoes) {
+        super(forceRefNo, forceName, activationFee, forceStrength, forceState,  canSkirmish, canAmbush, canFight);
         this.laserCannons = laserCannons;
         this.photonTorpedoes = photonTorpedoes;
     }
